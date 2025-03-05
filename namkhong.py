@@ -4,9 +4,9 @@ import re
 
 # Danh sách quy tắc
 rules = [
-    lambda p: len(p) >= 5,  # KHÔNG được ngắn hơn 5 ký tự
+    lambda p: sum(c.isalpha() for c in p) >= 5,  # Ít nhất 5 ký tự chữ cái
     lambda p: any(c.isdigit() for c in p),  # KHÔNG được thiếu số
-    lambda p: any(c.isupper() for c in p),  # KHÔNG được thiếu chữ cái in hoa
+    lambda p: len(p) % 2 == 1 and p[len(p) // 2].isupper(),  # Phải có ít nhất một chữ in hoa ở giữa
     lambda p: any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in p),  # KHÔNG được thiếu ký tự đặc biệt
     lambda p: sum(int(c) for c in p if c.isdigit()) == 25 if any(c.isdigit() for c in p) else False,  # KHÔNG được có tổng chữ số khác 25
     lambda p: any(month.lower() in p.lower() for month in ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]),  # KHÔNG được thiếu tháng
@@ -19,10 +19,10 @@ rules = [
 rule_descriptions = [
     "KHÔNG được để mật khẩu của bạn ngắn hơn 5 ký tự",
     "KHÔNG được để mật khẩu của bạn thiếu số",
-    "KHÔNG được để mật khẩu của bạn thiếu chữ cái in hoa",
+    "KHÔNG được để mật khẩu của bạn thiếu chữ cái in hoa nằm ở giữa",
     "KHÔNG được để mật khẩu của bạn thiếu ký tự đặc biệt",
     "KHÔNG được để các chữ số trong mật khẩu của bạn có tổng khác 25",
-    "KHÔNG được để mật khẩu của bạn thiếu tên một tháng trong năm",
+    "Your password MUST contain a month name",
     "KHÔNG được để mật khẩu của bạn thiếu số La Mã",
     "KHÔNG được để các số La Mã trong mật khẩu của bạn có tích khác 35",
     "KHÔNG được để mật khẩu của bạn thiếu ký hiệu hai chữ cái từ bảng tuần hoàn",
@@ -66,22 +66,28 @@ async def check_password(update, context):
         await update.message.reply_text("Vui lòng bắt đầu bằng lệnh /start!")
         return
 
+    password = update.message.text.strip()
     current_rule = user_progress[user_id]
-    password = update.message.text.strip()  # Loại bỏ khoảng trắng thừa
 
-    # Kiểm tra tất cả quy tắc từ 0 đến current_rule
-    for i in range(current_rule + 1):
-        if not rules[i](password):
-            await update.message.reply_text(f"Sai rồi! Mật khẩu của bạn vi phạm Quy tắc {i + 1}: {rule_descriptions[i]}")
+    passed_rules = []  # Danh sách quy tắc đã vượt qua
+
+    # Kiểm tra từng quy tắc một
+    for i in range(current_rule, len(rules)):
+        if rules[i](password):
+            passed_rules.append(f"✅ Quy tắc {i + 1}: {rule_descriptions[i]}\n")
+        else:
+            # Nếu gặp quy tắc đầu tiên bị sai, dừng lại ngay
+            await update.message.reply_text(
+                "\n".join(passed_rules) +
+                f"\n❌ Mật khẩu của bạn vi phạm Quy tắc {i + 1}: {rule_descriptions[i]}"
+            )
             return
 
-    # Nếu vượt qua tất cả quy tắc đến current_rule, chuyển sang bước tiếp theo
-    user_progress[user_id] += 1
-    if current_rule + 1 == len(rules):
-        await update.message.reply_text("Chúc mừng! Bạn đã vượt qua tất cả 10 quy tắc và chiến thắng!")
-        del user_progress[user_id]
-    else:
-        await update.message.reply_text(f"Đúng rồi! Tiếp theo, Quy tắc {current_rule + 2}: {rule_descriptions[current_rule + 1]}")
+    # Nếu không bị sai quy tắc nào, cập nhật trạng thái và tiếp tục
+    user_progress[user_id] = len(rules)
+    await update.message.reply_text("\n".join(passed_rules) + "\n🎉 Chúc mừng! Bạn đã vượt qua tất cả các quy tắc và chiến thắng!")
+    del user_progress[user_id]
+
 
 def main():
     # Token bot của bạn
