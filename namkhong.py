@@ -31,13 +31,13 @@ rule_descriptions = [
 
 # Hàm kiểm tra số La Mã (cho phép viết thường)
 def check_roman_numerals(password):
-    roman_pattern = r'(?i)(ix|iv|viii|vii|vi|iii|ii|i|v|x)'  # Không dùng \b
+    roman_pattern = r'(?i)(ix|iv|viii|vii|vi|iii|ii|i|v|x|xl|l|xc|c|d|m)'  # Không dùng \b, thêm d và m
     return bool(re.search(roman_pattern, password))
 
 # Hàm tính tích số La Mã
 def check_roman_numeral_product(password):
-    roman_values = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10}
-    roman_pattern = r'(?i)(IX|IV|VIII|VII|VI|III|II|I|V|X)'  # Không dùng \b
+    roman_values = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XL": 40, "L": 50, "XC": 90, "C": 100, "D": 500, "M": 1000}
+    roman_pattern = r'(?i)(IX|IV|VIII|VII|VI|III|II|I|V|X|XL|L|XC|C|D|M)'  # Không dùng \b, thêm D và M
     matches = re.findall(roman_pattern, password, re.IGNORECASE)
     
     if not matches:
@@ -48,6 +48,7 @@ def check_roman_numeral_product(password):
         product *= roman_values[match.upper()]  # Chuyển về viết hoa để tra bảng giá trị
     
     return product == 35
+
 # Hàm kiểm tra năm nhuận
 def check_leap_year(password):
     years = re.findall(r'\d{4}', password)
@@ -91,6 +92,8 @@ async def check_password(update, context):
     # Nếu không bị sai quy tắc nào, cập nhật trạng thái và tiếp tục
     user_progress[user_id] = len(rules)
     await update.message.reply_text("\n".join(passed_rules) + "\n🎉 Chúc mừng! Bạn đã vượt qua tất cả các quy tắc và chiến thắng!\n\nĐây là OTT của mật thư: \nTiếng Chuông vọng mãi trời nam,\nNgười Già như Trẻ chung làm núi sông.\nNgười nằm xuống, đất ôm lòng,\nNgười còn ở lại tiếp dòng ngày mai.")
+    await update.message.reply_text("Vui lòng không nhập đáp án tại đây. Cảm ơn")
+    
     del user_progress[user_id]
 
 
