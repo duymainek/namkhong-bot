@@ -63,7 +63,7 @@ user_progress = {}
 async def start(update, context):
     user_id = update.message.from_user.id
     user_progress[user_id] = 0  # Bắt đầu từ quy tắc 0
-    await update.message.reply_text("Chào mừng bạn đến với Password Master! Hãy nhập một mật khẩu để bắt đầu.\nQuy tắc 1: " + rule_descriptions[0])
+    await update.message.reply_text("Chào mừng bạn đến với thử thách 5 không! Nhiệm vụ của bạn là tạo ra một mật khẩu đáp ứng tất cả yêu cầu của chúng tôi để có thể nhận được OTT của mật thư. Hãy nhập một mật khẩu để bắt đầu.\nQuy tắc 1: " + rule_descriptions[0])
 
 async def check_password(update, context):
     user_id = update.message.from_user.id
@@ -90,7 +90,7 @@ async def check_password(update, context):
 
     # Nếu không bị sai quy tắc nào, cập nhật trạng thái và tiếp tục
     user_progress[user_id] = len(rules)
-    await update.message.reply_text("\n".join(passed_rules) + "\n🎉 Chúc mừng! Bạn đã vượt qua tất cả các quy tắc và chiến thắng!")
+    await update.message.reply_text("\n".join(passed_rules) + "\n🎉 Chúc mừng! Bạn đã vượt qua tất cả các quy tắc và chiến thắng!\n\nĐây là OTT của mật thư: \nTiếng Chuông vọng mãi trời nam,\nNgười Già như Trẻ chung làm núi sông.\nNgười nằm xuống, đất ôm lòng,\nNgười còn ở lại tiếp dòng ngày mai.")
     del user_progress[user_id]
 
 
