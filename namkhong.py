@@ -17,16 +17,16 @@ rules = [
 ]
 
 rule_descriptions = [
-    "KHÔNG được có ít hơn 5 ký tự chữ cái.",
+    "KHÔNG được có ít hơn 5 ký tự chữ cái",
     "KHÔNG được thiếu ít nhất một chữ số.",
     "KHÔNG được có nhiều hơn hoặc ít hơn một chữ cái in hoa, và nó phải nằm ở giữa.",
     "KHÔNG được có ít hơn một ký tự đặc biệt và không được có quá hai.",
     "KHÔNG được có tổng các chữ số khác 25.",
     "Must NOT contain more than one month of the year.",
-    "KHÔNG được thiếu ít nhất một số La Mã (tính cả viết hoa và thường).",
+    "KHÔNG được thiếu số La Mã (tính cả viết hoa và thường).",
     "KHÔNG được có tích của các số La Mã khác 35.",
-    "KHÔNG được thiếu ít nhất một ký hiệu hai chữ cái từ bảng tuần hoàn.",
-    "KHÔNG được thiếu ít nhất một năm nhuận.",
+    "KHÔNG được thiếu một ký hiệu hai chữ cái từ bảng tuần hoàn.",
+    "KHÔNG được thiếu một năm nhuận.",
 ]
 
 # Hàm kiểm tra số La Mã (cho phép viết thường)
