@@ -16,6 +16,7 @@ rules = [
     lambda p: check_leap_year(p),  # KHÔNG được thiếu năm nhuận
 ]
 
+
 rule_descriptions = [
     "KHÔNG được có ít hơn 5 ký tự chữ cái",
     "KHÔNG được thiếu ít nhất một chữ số.",
