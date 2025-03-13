@@ -4,29 +4,27 @@ import re
 
 # Danh sách quy tắc
 rules = [
-    lambda p: sum(c.isalpha() for c in p) >= 5,  # Ít nhất 5 ký tự chữ cái
+    lambda p: 10 < sum(c.isalpha() for c in p) < 25 and ' ' not in p,
+    lambda p: all(c.isalpha() and c.upper() in string.ascii_uppercase for c in p if c.isalpha()),
     lambda p: any(c.isdigit() for c in p),  # KHÔNG được thiếu số
     lambda p: sum(1 for c in p if c.isupper()) == 1 and p[len(p) // 2].isupper(),  # Chỉ có 1 chữ cái in hoa và nó nằm ở giữa
-    lambda p: 1 <= sum(1 for c in p if c in "!@#$%^&*()_+-=[]{}|;:,.<>?") <= 2,  # Chỉ có 1 hoặc 2 ký tự đặc biệt
     lambda p: sum(int(c) for c in p if c.isdigit()) == 25 if any(c.isdigit() for c in p) else False,  # KHÔNG được có tổng chữ số khác 25
     lambda p: sum(1 for month in ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"] if month in p.lower()) == 1,  # Chỉ có duy nhất 1 tháng
     lambda p: check_roman_numerals(p),  # Số La Mã có thể viết thường hoặc hoa
     lambda p: check_roman_numeral_product(p),  # KHÔNG được có tích số La Mã khác 35
-    lambda p: any(element in p for element in ["He", "Li", "Be", "Ne", "Na", "Mg", "Al", "Si", "Cl", "Ar"]),  # KHÔNG được thiếu ký hiệu 2 chữ từ bảng tuần hoàn
     lambda p: check_leap_year(p),  # KHÔNG được thiếu năm nhuận
 ]
 
 
 rule_descriptions = [
-    "KHÔNG được có ít hơn 5 ký tự chữ cái",
+    "KHÔNG được có ít hơn 10 ký tự chữ cái, không được quá 25 chữ cái và không có khoảng trắng.",
+    "Không được chứa ký tự không phải chữ cái trong bảng chữ cái Alphabet.",
     "KHÔNG được thiếu ít nhất một chữ số.",
     "KHÔNG được có nhiều hơn hoặc ít hơn một chữ cái in hoa, và nó phải nằm ở giữa.",
-    "KHÔNG được có ít hơn một ký tự đặc biệt và không được có quá hai.",
     "KHÔNG được có tổng các chữ số khác 25.",
     "Must NOT contain more than one month of the year.",
     "KHÔNG được thiếu số La Mã (tính cả viết hoa và thường).",
     "KHÔNG được có tích của các số La Mã khác 35.",
-    "KHÔNG được thiếu một ký hiệu hai chữ cái từ bảng tuần hoàn.",
     "KHÔNG được thiếu một năm nhuận.",
 ]
 
