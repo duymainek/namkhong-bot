@@ -1,6 +1,7 @@
 import telegram
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 import re
+import string
 
 # Danh sách quy tắc
 rules = [
