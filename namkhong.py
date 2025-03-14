@@ -17,7 +17,7 @@ rules = [
 ]
 
 rule_descriptions = [
-    "KHÔNG được có ít hơn 10 ký tự chữ cái, không được quá 25 chữ cái và không có khoảng trắng.",
+    "KHÔNG được có ít hơn 11 ký tự chữ cái, không được quá 25 chữ cái và không có khoảng trắng.",
     "Không được chứa ký tự không phải chữ cái trong bảng chữ cái Alphabet.",
     "KHÔNG được thiếu ít nhất một chữ số.",
     "KHÔNG được có nhiều hơn hoặc ít hơn một chữ cái in hoa, và nó phải nằm ở giữa.",
