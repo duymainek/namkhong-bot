@@ -23,7 +23,7 @@ rule_descriptions = [
     "KHÔNG được thiếu ít nhất một chữ số.",
     "KHÔNG được có nhiều hơn hoặc ít hơn một chữ cái in hoa, và nó phải nằm ở giữa.",
     "KHÔNG được có tổng các chữ số khác 25.",
-    "Must NOT contain more than one month of the year.",
+    "Must contain exactly one month of the year; it must not include more than one month, nor be missing any month.",
     "KHÔNG được thiếu số La Mã (tính cả viết hoa và thường).",
     "KHÔNG được có tích của các số La Mã khác 35.",
     "KHÔNG được thiếu một năm nhuận(bắt đầu từ năm 1000).",
