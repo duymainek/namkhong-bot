@@ -26,7 +26,7 @@ rule_descriptions = [
     "Must NOT contain more than one month of the year.",
     "KHÔNG được thiếu số La Mã (tính cả viết hoa và thường).",
     "KHÔNG được có tích của các số La Mã khác 35.",
-    "KHÔNG được thiếu một năm nhuận.",
+    "KHÔNG được thiếu một năm nhuận(bắt đầu từ năm 1000).",
 ]
 
 # Hàm kiểm tra số La Mã (cho phép viết thường)
